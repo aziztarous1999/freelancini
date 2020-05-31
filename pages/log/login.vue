@@ -16,12 +16,12 @@
               <h3 class="text-white mb-5"><strong>Sign in</strong></h3>
             </div>
             <div class="grey-text">
-            <mdb-input icon="envelope" label="Your email" type="email"/>
-            <mdb-input icon="lock" label="Your password" type="password" containerClass="mb-0"/>
+            <mdb-input icon="envelope" label="Your email" v-model="email" type="email"/>
+            <mdb-input icon="lock" label="Your password" v-model="password"  type="password" containerClass="mb-0"/>
             </div>
             <p class="font-small blue-text d-flex justify-content-end pb-3">Forgot <a href="#" class="blue-text ml-1"> Password?</a></p>
             <div class="text-center mb-3">
-              <mdb-btn  type="button"  gradient="blue" rounded class=" z-depth-1a rounded-pill">Sign in</mdb-btn>
+              <mdb-btn  type="button"  gradient="blue" @click="login()" rounded class=" z-depth-1a rounded-pill">Sign in</mdb-btn>
             </div>
             <p class="font-small text-white text-right d-flex justify-content-center mb-3 pt-2"> or Sign in with:</p>
             <div class="row my-3 d-flex justify-content-center">
@@ -63,9 +63,29 @@
     },
     data() {
       return {
-        showModal: false
+        showModal: false,
+        email:'' ,
+        password:''
       };
+    },
+    methods: {
+    login() {
+      let body = {
+        email: this.email ,
+        password: this.password,
+      }
+      this.$axios.post("/api/account/login", body).then( response => {
+        if (!response.data.error) {
+          console.log(response.data);  
+          this.$store.commit('user/login', response.data )
+        }  else {
+
+        }
+      }).catch(
+        error => console
+      )
     }
+  } 
   }
 </script>
 <style>

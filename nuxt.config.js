@@ -49,7 +49,12 @@ export default {
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
+
+proxy: {
+  '/api/': { target: 'http://127.0.0.1:3333/', pathRewrite: {'^/api/': ''}, changeOrigin: true } 
+} ,
   axios: {
+    proxy: true
   },
   /*
   ** vuetify module configuration
