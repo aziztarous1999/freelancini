@@ -1,16 +1,13 @@
 <template>
   <mdb-container>
 
-
       <mdb-row >
 
-
-
-<mdb-col sm="6" offsetSm="3">
+<mdb-col  sm="6" offsetSm="3">
   <section class="form-elegant">
-    <mdb-row class="rounded">
+    <mdb-row style="background:linear-gradient(to right, red, purple);padding:4px" class="rounded">
       <mdb-col  class="rounded" md="12"   style="padding:35px;background:url(https://static.vecteezy.com/system/resources/thumbnails/000/274/527/original/ocean-background.jpg);background-repeat: no-repeat;background-size:100% 100%">
-        <mdb-card style="background:transparent">
+        <mdb-card style="background:transparent;padding:20px 0">
           <mdb-card-body class="mx-4">
             <div class="text-center">
               <h3 class="text-white mb-5"><strong>Sign in</strong></h3>
@@ -19,25 +16,18 @@
             <mdb-input icon="envelope" label="Your email" v-model="email" type="email"/>
             <mdb-input icon="lock" label="Your password" v-model="password"  type="password" containerClass="mb-0"/>
             </div>
-            <p class="font-small blue-text d-flex justify-content-end pb-3">Forgot <a href="#" class="blue-text ml-1"> Password?</a></p>
             <div class="text-center mb-3">
               <mdb-btn  type="button"  gradient="blue" @click="login()" rounded class=" z-depth-1a rounded-pill">Sign in</mdb-btn>
             </div>
-            <p class="font-small text-white text-right d-flex justify-content-center mb-3 pt-2"> or Sign in with:</p>
-            <div class="row my-3 d-flex justify-content-center">
-              <mdb-btn  type="button" color="white" rounded class="mr-md-3 round z-depth-1a"><mdb-icon fab icon="facebook" class="blue-text text-center"/></mdb-btn>
-              <mdb-btn type="button" color="white" rounded class="mr-md-3 round z-depth-1a"><mdb-icon fab icon="twitter" class="blue-text"/></mdb-btn>
-              <mdb-btn type="button" color="white" rounded class="mr-md-3 round z-depth-1a"><mdb-icon fab icon="google-plus" class="blue-text"/></mdb-btn>
-            </div>
           </mdb-card-body>
           <mdb-modal-footer class="mx-5 pt-3 mb-1">
-            <p class="font-small text-white d-flex justify-content-end">Not a member? <a href="#" class="blue-text ml-1"> Sign Up</a></p>
+            <p class="font-small text-white d-flex justify-content-end">Not a member?<nuxt-link to="/log/register" class="blue-text ml-1">Sign Up!</nuxt-link></p>
           </mdb-modal-footer>
         </mdb-card>
       </mdb-col>
     </mdb-row>
   </section>
-
+<notifications group="foo" position="bottom right"/>
 </mdb-col>
 </mdb-row>
 
@@ -65,11 +55,13 @@
       return {
         showModal: false,
         email:'' ,
-        password:''
+        password:'',
+        switch1:false
       };
     },
     methods: {
     login() {
+      /*
       let body = {
         email: this.email ,
         password: this.password,
@@ -78,12 +70,31 @@
         if (!response.data.error) {
           console.log(response.data);  
           this.$store.commit('user/login', response.data )
+          this.$notify({
+            group: 'foo',
+            type: 'success',
+            title: '<i class="fas fa-check"></i> Welcome',
+            text: 'You logged în successfully!'
+          });
         }  else {
 
         }
       }).catch(
         error => console
+        this.$notify({
+          group: 'foo',
+          type: 'error',
+          title: '<i class="fas fa-exclamation-triangle"></i> Error',
+          text: 'An error has occurred, please try again!'
+        });
       )
+  */
+
+
+
+//redirection          
+// this.$nuxt.$router.replace({ path: '/freelancer/dashboard' })
+
     }
   } 
   }

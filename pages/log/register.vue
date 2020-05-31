@@ -47,7 +47,7 @@
                         <center>
                           <label
                             for="imageUpload"
-                            style="position: static !important;"
+                            style="color:white !important;position: static !important;"
                             class="text-center text-white btn btn-mdb-color btn-rounded"
                             >Add photo</label
                           >
@@ -85,6 +85,16 @@
                             label="Last name"
                             required
                           ></v-text-field>
+                        </v-col>
+
+                        <v-col cols="12" md="12">
+                        <v-text-field
+                          v-model="username"
+                          :rules="usernameeRules"
+                          :counter="15"
+                          label="UserName*"
+                          required
+                        ></v-text-field>
                         </v-col>
 
                         <v-col cols="12" md="12">
@@ -208,16 +218,6 @@
 
             <mdb-row>
 
-              <v-col cols="10" md="10" offsetMd="2">
-                <v-text-field
-                  v-model="username"
-                  :rules="usernameeRules"
-                  :counter="15"
-                  label="UserName*"
-                  required
-                ></v-text-field>
-              </v-col>        
-
               <v-col cols="6" md="6" offsetMd="2">
                 <v-text-field
                   v-model="streetName"
@@ -271,15 +271,14 @@
               <mdb-col>
                 <v-btn
                   :disabled="
-                    streetName == '' ||
+                      streetName == '' ||
                       streetName.length > 20 ||
                       streetNumber == '' ||
                       streetNumber.length > 6 ||
                       city == '' ||
                       city.length > 20 ||
                       state == '' ||
-                      state.length > 10
-                  "
+                      state.length > 10"
                   color="primary"
                   style="float:right"
                   @click="register()"
@@ -340,7 +339,7 @@ export default {
     password: "",
     passwordRules: [
       v => !!v || "password is required",
-      v => v.length <= 10 || "password must be less than 15 characters"
+      v => v.length <= 15 || "password must be less than 15 characters"
     ],
     streetName: "",
     streetNameRules: [
@@ -383,8 +382,22 @@ export default {
       }
       this.$axios.post("/api/account/create", body).then(data => {
         console.log(data);
+        this.$notify({
+            group: 'foo',
+            type: 'success',
+            title: '<i class="fas fa-check"></i> Success',
+            text: 'You has registred successfully!'
+          });
       }).catch(
-        error => console
+        // error => console
+        error => {
+          this.$notify({
+          group: 'foo',
+          type: 'error',
+          title: '<i class="fas fa-exclamation-triangle"></i> Error',
+          text: 'An error has occurred, please try again!'
+        })
+        }
       )
     }
   } ,
@@ -403,5 +416,12 @@ export default {
 <style scoped>
 .avatar-pic {
   width: 150px;
+}
+
+input , label { 
+color: black!important
+}
+input {
+    color: black !important;
 }
 </style>

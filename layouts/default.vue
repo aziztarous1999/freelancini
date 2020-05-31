@@ -101,10 +101,10 @@
               {{ role }}
             </div>
             <div class="col-3" offset="2">
-              <v-switch
+              <v-switch v-if="logged"
+                @change="switchRole()"
                 style="width:100%;"
                 class="float-right"
-                v-model="switch1"
                 color="green"
                 inset
               ></v-switch>
@@ -113,7 +113,7 @@
         </div>
       </center>
 
-      <v-button @click="logout()" class="btn blue-gradient rounded-pill"
+      <v-button v-if="logged" @click="logout()" class="btn blue-gradient rounded-pill"
         ><i class="fas fa-sign-out-alt"></i
       ></v-button>
     </v-app-bar>
@@ -211,15 +211,21 @@ export default {
   },
 */ computed: {
     logged() {
+      //return true
       return this.$store.state.user.logged;
     },
     role() {
+      // return "freelancer"
       return this.$store.state.user.role;
     }
   },
   methods : {
     logout () {
       this.$store.commit('user/logout')
+    },
+    switchRole()
+    {
+      console.log("switched")
     }
   }
 };
