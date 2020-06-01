@@ -104,13 +104,18 @@
                         </v-col>
                       </v-container>
                     </mdb-row>
-
+                    
                     <mdb-row>
                       <v-col>
-                        <mdb-btn
-                          gradient="blue"
-                          class="rounded-pill float-right"
-                          @click="postJob()"
+                        <mdb-btn gradient="blue" class="rounded-pill float-right"
+                  :disabled="
+                      title == '' ||
+                      title.length > 20 ||
+                      slots == '' ||
+                      slots.length > 3 ||
+                      skills.length == 0 ||
+                      aboutProject ==''" 
+                          @click="postJob()" 
                           >Create Job Offer!</mdb-btn
                         >
                       </v-col>
@@ -191,4 +196,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+input , label { 
+color: black !important ;
+}
+</style>

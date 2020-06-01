@@ -1,6 +1,7 @@
 <template>
   <div>
     <br />
+    <notifications group="foo" position="bottom right"/>
     <div class="z-depth-3">
       <br />
       <p style="font-weight:300;font-size: 1.5625rem;text-align:center">
@@ -54,6 +55,8 @@
                           <input
                             type="file"
                             id="imageUpload"
+                             @change="processFile($event)"
+                             required
                             accept="image/*"
                             style="display: none"
                           />
@@ -156,6 +159,7 @@
                 <v-slide-item
                   v-for="n in categories"
                   :key="n.name"
+                  :value="n.name"
                   v-slot:default="{ active, toggle }"
                 >
                   <v-card
@@ -304,6 +308,8 @@ export default {
     valid1: false,
     firstname: "",
     lastname: "",
+    user : "" ,
+    picture : null ,
     //username : "" ,
     model: [],
     categories: [
@@ -368,19 +374,31 @@ export default {
     mdbCol
   },
   methods: {
+    processFile(event) {
+      this.picture = event.target.files[0]
+    },
     register() {
       let body = {
         email: this.email,
         firstname: this.firstname,
-        username: this.username ,
+        username: this.user ,
         lastname: this.lastname,
         password: this.password,
         street: this.streetName,
         city: this.streetNumber,
-        country: this.city
-        //profile_pic : 'required'
+        country: this.city ,
+        domain : this.model ,
+        picture : this.picture
       }
-      this.$axios.post("/api/account/create", body).then(data => {
+      console.log(body);
+      
+      let data = new FormData()
+      for (let i in body ){
+        data.append(i,body[i])
+      }
+      console.log(data);
+      
+      this.$axios.post("/api/account/create", data ).then(data => {
         console.log(data);
         this.$notify({
             group: 'foo',
@@ -388,27 +406,31 @@ export default {
             title: '<i class="fas fa-check"></i> Success',
             text: 'You has registred successfully!'
           });
+        this.$nuxt.$router.replace({ path: '/log/login' })
       }).catch(
         // error => console
         error => {
+          console.log(error)
           this.$notify({
           group: 'foo',
           type: 'error',
           title: '<i class="fas fa-exclamation-triangle"></i> Error',
           text: 'An error has occurred, please try again!'
         })
+        this.$nuxt.$router.replace({ path: '/log/register' })
         }
       )
     }
   } ,
   computed: {
      username : { get() {
+      this.user = this.firstname+" "+this.lastname
       return this.firstname+" "+this.lastname
     } ,
     set( x ) {
-      return x 
+      this.user = x 
     }
-    }
+    } , 
   }
 };
 </script>
@@ -419,7 +441,7 @@ export default {
 }
 
 input , label { 
-color: black!important
+color: black !important ;
 }
 input {
     color: black !important;
