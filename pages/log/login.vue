@@ -61,7 +61,6 @@
     },
     methods: {
     login() {
-      /*
       let body = {
         email: this.email ,
         password: this.password,
@@ -70,30 +69,31 @@
         if (!response.data.error) {
           console.log(response.data);  
           this.$store.commit('user/login', response.data )
-          this.$notify({
+          /*this.$notify({
             group: 'foo',
             type: 'success',
             title: '<i class="fas fa-check"></i> Welcome',
             text: 'You logged în successfully!'
-          });
+          });*/
+          this.$nuxt.$router.replace({ path: '/freelancer/dashboard' })
         }  else {
 
         }
       }).catch(
-        error => console
+        error => { console.log(error)
         this.$notify({
           group: 'foo',
           type: 'error',
           title: '<i class="fas fa-exclamation-triangle"></i> Error',
           text: 'An error has occurred, please try again!'
-        });
+        }); }
       )
-  */
+  
 
 
 
 //redirection          
-// this.$nuxt.$router.replace({ path: '/freelancer/dashboard' })
+// 
 
     }
   } 

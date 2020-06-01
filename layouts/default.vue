@@ -137,7 +137,7 @@
 export default {
   data() {
     return {
-      // logged:false,
+      //logged:false,
       // role:"freelancer",
       clipped: false,
       drawer: false,
@@ -218,12 +218,10 @@ export default {
   },
 */ computed: {
     logged() {
-      return true
-      //return this.$store.state.user.logged;
+      return this.$store.state.user.logged;
     },
     role() {
-       return "client"
-      //return this.$store.state.user.role;
+      return this.$store.state.user.role;
     }
   },
   methods : {
@@ -231,8 +229,12 @@ export default {
       this.$store.commit('user/logout')
     },
     switchRole()
-    {
-      console.log("switched")
+    {  const config = {headers: { Authorization: `Bearer ${this.$store.state.user.token}` } };
+      this.$axios.get('/api/account/switch',config).then((response) => {
+        if (response.data.code == 200) {
+           this.$store.commit('user/setRole', response.data.role )
+        }
+      }).catch((error) => console.log(erro ))
     }
   }
 };

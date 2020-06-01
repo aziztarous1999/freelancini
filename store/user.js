@@ -6,11 +6,14 @@ export const state = () => ({
   })
 
 export const mutations = {
-   login (state, tokens) {
+    login (state, tokens) {
       state.logged = true ;
       state.token = tokens.token ;
       state.refresh = tokens.refreshToken ;
-      state.role = tokens.role == 1 ? 'freelancer' : 'client' ;
+      state.role = tokens.role == 1 ? 'client' : 'freelancer' ;
+    },
+    setRole( state , role ) {
+      state.role = role ?  'client' : 'freelancer' ;
     },
     logout (state) {
        state.logged = false ;
