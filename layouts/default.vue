@@ -12,7 +12,9 @@
       <!--not loged-->
       <v-list v-if="!logged">
         <center>
+          <nuxt-link to="/">
           <img width="60%" height="50px" src="/logo.png" />
+          </nuxt-link>
         </center>
         <br />
         <v-list-item
@@ -34,7 +36,9 @@
       <!--loged-->
       <v-list v-if="logged && role == 'freelancer'">
         <center>
+          <nuxt-link to="/">
           <img width="60%" height="50px" src="/logo.png" />
+          </nuxt-link>
         </center>
         <br />
         <v-list-item
@@ -56,7 +60,9 @@
       <!--client-->
       <v-list v-if="logged && role == 'client'">
         <center>
+          <nuxt-link to="/">
           <img width="60%" height="50px" src="/logo.png" />
+          </nuxt-link>
         </center>
         <br />
         <v-list-item
@@ -97,10 +103,7 @@
         <br />
         <div class="container">
           <div class="row">
-            <div class="col-7 text-white">
-              {{ role }}
-            </div>
-            <div class="col-3" offset="2">
+            <div class="col-sm-3">
               <v-switch v-if="logged"
                 @change="switchRole()"
                 style="width:100%;"
@@ -109,9 +112,13 @@
                 inset
               ></v-switch>
             </div>
+            <div class="col-sm-7 offset-sm-2 text-white">
+              {{ role }}
+            </div>
           </div>
         </div>
       </center>
+      
 
       <v-button v-if="logged" @click="logout()" class="btn blue-gradient rounded-pill"
         ><i class="fas fa-sign-out-alt"></i
@@ -211,12 +218,12 @@ export default {
   },
 */ computed: {
     logged() {
-      //return true
-      return this.$store.state.user.logged;
+      return true
+      //return this.$store.state.user.logged;
     },
     role() {
-      // return "freelancer"
-      return this.$store.state.user.role;
+       return "client"
+      //return this.$store.state.user.role;
     }
   },
   methods : {

@@ -29,7 +29,7 @@
           {
             text: 'PROJECT',
             align: 'start',
-            filterable: false,
+            filterable: true,
             value: 'name',
           },
           { text: 'BUDGET (DT)', value: 'budget' },
