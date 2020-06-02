@@ -168,6 +168,24 @@
                         <mdb-btn
                           gradient="blue"
                           class="rounded-pill float-right"
+                          :disabled="
+                            firstname == '' ||
+                            firstname.length > 10 ||
+                            lastname == '' ||
+                            lastname.length > 10 ||
+                            email == '' ||
+                            ! /.+@.+/.test(email) ||
+                            streetName == '' ||
+                            streetName.length > 20 ||
+                            streetNumber == '' ||
+                            streetNumber.length > 6 ||
+                            city == '' ||
+                            city.length > 10 ||
+                            state == '' ||
+                            state.length > 10 ||
+                            mainDomain.length == 0 ||
+                            languges.length == 0 ||
+                            skills.length == 0"
                           >Update Profile</mdb-btn
                         >
                       </v-col>

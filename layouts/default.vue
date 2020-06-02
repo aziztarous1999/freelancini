@@ -95,9 +95,10 @@
       </v-btn>
 
       <v-toolbar-title
-        style="width:calc(100% - 165px);text-align:center;color:white"
-        v-text="title"
-      />
+        style="width:85%;text-align:center;color:white"
+      ><img width="15%" height="50px" src="https://cdn.discordapp.com/attachments/713530507702435931/717039052578095186/Title.png" />
+      </v-toolbar-title>
+
       <v-spacer />
       <center>
         <br />
