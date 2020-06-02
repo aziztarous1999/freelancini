@@ -249,6 +249,106 @@
           </div>
         </div>
         <!-- Card -->
+
+        <br>
+
+        <!-- Card -->
+        <div class="card testimonial-card">
+          <!-- Background color -->
+          <div class="card-up indigo lighten-1"></div>
+
+          <!-- Avatar -->
+
+          <!-- Content -->
+          <div
+            class="card-body"
+          >
+            <!-- Name -->
+            <h4 class="font-weight-light mb-3 black--text card-title text-center">
+              Financial Exchanges
+            </h4>
+            <hr />
+
+
+            <!-- solde input -->
+            <div class="input-group">
+              <div class="input-group-prepend ">
+                <span class="input-group-text" id="basic-addon">
+                  <i class="text-success fas fa-money-bill-wave"></i>
+                </span>
+              </div>
+              <input v-model="solde" readonly type="text" style="background:transparent" class="form-control" >
+            </div>
+
+            <br>
+            
+            <!-- bitcoins input -->
+            <div class="input-group">
+              <div class="input-group-prepend ">
+                <span class="input-group-text" id="basic-addon">
+                  <i class="text-warning fab fa-bitcoin"></i>
+                </span>
+              </div>
+              <input v-model="bitcoins" readonly type="text" style="background:transparent" class="form-control" >
+            </div>
+
+            <br>
+            
+            <div class="container">
+              <h6 class=" grey-text text-center">Buy</h6>
+              <div class="row">
+                <div class="col-4 text-center">
+                  <button :disabled="solde<100" @click="buy(1)" type="button" style="width:70px;height:70px" class="rounded-circle btn btn-outline-success waves-effect px-3">
+                    <i class="text-success fab fa-bitcoin"></i><br>X1
+                    </button>
+                </div>
+
+                <div class="col-4 text-center">
+                  <button :disabled="solde<1000" @click="buy(10)" type="button" style="width:70px;height:70px" class="rounded-circle btn btn-outline-success waves-effect px-3">
+                    <i class="text-success fab fa-bitcoin" aria-hidden="true"></i><br>X10
+                    </button>
+                </div>
+
+                <div class="col-4 text-center">
+                  <button :disabled="solde<10000" @click="buy(100)" type="button" style="width:70px;height:70px" class="rounded-circle btn btn-outline-success waves-effect px-3">
+                    <i class="text-success fab fa-bitcoin" aria-hidden="true"></i> X100
+                    </button>
+                </div>
+
+
+
+              </div>
+            </div>
+            
+            <div class="container">
+              <h6 class=" grey-text text-center">Sell</h6>
+              <div class="row">
+                <div class="col-4 text-center">
+                  <button :disabled="bitcoins<1" @click="sell(1)" type="button" style="width:70px;height:70px" class="rounded-circle btn btn-outline-danger waves-effect px-3">
+                    <i class="text-danger fab fa-bitcoin"></i><br>X1
+                    </button>
+                </div>
+
+                <div class="col-4 text-center">
+                  <button :disabled="bitcoins<10" @click="sell(10)" type="button" style="width:70px;height:70px" class="rounded-circle btn btn-outline-danger waves-effect px-3">
+                    <i class="text-danger fab fa-bitcoin" aria-hidden="true"></i><br>X10
+                    </button>
+                </div>
+
+                <div class="col-4 text-center">
+                  <button :disabled="bitcoins<100" @click="sell(100)" type="button" style="width:70px;height:70px" class="rounded-circle btn btn-outline-danger waves-effect px-3">
+                    <i class="text-danger fab fa-bitcoin" aria-hidden="true"></i> X100
+                    </button>
+                </div>
+
+
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- Card -->
       </mdb-col>
     </mdb-row>
   </mdb-container>
@@ -261,7 +361,8 @@ import {
   mdbRow,
   mdbCol,
   mdbTooltip,
-  mdbSelect
+  mdbSelect,
+  mdbInput,
 } from "mdbvue";
 export default {
   data: () => ({
@@ -326,15 +427,34 @@ export default {
     skillsItems: ["JavaScript", "HTML", "Angular", "PHP", "CSS"],
     skills: ["HTML"],
 
-    aboutMe: ""
+    aboutMe: "",
+    solde:5000,
+    bitcoins:30,
+
+
   }),
+  methods: {
+    buy(a){
+      this.bitcoins+=a;
+      console.log(this.bitcoins);
+      this.solde-=(a*100);
+      console.log(this.solde);
+    },
+    sell(a){
+      this.bitcoins-=a;
+      console.log(this.bitcoins);
+      this.solde+=(a*100);
+      console.log(this.solde);
+    }
+  },
   components: {
     mdbContainer,
     mdbRow,
     mdbCol,
     mdbBtn,
     mdbTooltip,
-    mdbSelect
+    mdbSelect,
+    mdbInput
   }
 };
 </script>

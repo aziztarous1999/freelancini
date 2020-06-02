@@ -19,7 +19,7 @@
         <v-card-title class="text-primary headline">{{freelancer.name}}</v-card-title>
         <v-card-text><h5>Why Me ?</h5>{{freelancer.motivation}}</v-card-text>
         <center>
-        <nuxt-link :to="'chat/' + freelancer.id" class="btn aqua-gradient rounded-pill" tag="button">Contact</nuxt-link>
+        <nuxt-link :to="'chat/' + freelancer.id" class="btn aqua-gradient rounded-pill" tag="button">Hire!</nuxt-link>
         </center>
       </v-card>
     </v-timeline-item>

@@ -38,7 +38,7 @@
               <br />
               <h5 class="text-muted" style="font-weight:600;">Description:</h5>
               <p>{{ job.discription }}</p>
-              <nuxt-link
+              <nuxt-link v-show="logged"
                 :to="'/job/' + job.id"
                 class="btn aqua-gradient rounded-pill"
                 >Read More!</nuxt-link
@@ -77,7 +77,8 @@ export default {
   },
   data() {
     return {
-      Jobs: []
+      Jobs: [],
+      logged:false,
     };
   } ,
   methods:{
