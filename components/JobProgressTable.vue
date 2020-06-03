@@ -30,196 +30,26 @@
             text: 'PROJECT',
             align: 'start',
             filterable: true,
-            value: 'name',
+            value: 'job.title',
           },
-          { text: 'BUDGET (DT)', value: 'budget' },
-          { text: 'STATUS', value: 'status' },
-          { text: 'OWNER', value: 'owner' },
+          { text: 'BUDGET (DT)', value: 'price' },
+          { text: 'ENDED', value: 'ended'  },
+          { text: 'OWNER', value: 'job.client.user.username' },
         ],
         desserts: [
-          {
-            name: 'Argon Design System',
-            budget: 1159,
-            status: "pending",
-            owner: "client1",
-          },
-          {
-            name: 'Angular Now UI Kit PRO',
-            budget: 1150,
-            status: "pending",
-            owner: "client2",
-          },
-                    {
-            name: 'Black Dashboard',
-            budget: 1149,
-            status: "completed",
-            owner: "client3",
-          },
-                    {
-            name: 'React Material Dashboard',
-            budget: 1189,
-            status: "pending",
-            owner: "client4",
-          },
-                    {
-            name: 'Vue Paper UI Kit PRO',
-            budget: 1109,
-            status: "delayed",
-            owner: "client1",
-          },
-                    {
-            name: 'Argon Design System',
-            budget: 1109,
-            status: "pending",
-            owner: "client5",
-          },
-          {
-            name: 'Argon Design System',
-            budget: 1159,
-            status: "pending",
-            owner: "client1",
-          },
-          {
-            name: 'Angular Now UI Kit PRO',
-            budget: 1150,
-            status: "pending",
-            owner: "client2",
-          },
-                    {
-            name: 'Black Dashboard',
-            budget: 1149,
-            status: "completed",
-            owner: "client3",
-          },
-                    {
-            name: 'React Material Dashboard',
-            budget: 1189,
-            status: "pending",
-            owner: "client4",
-          },
-                    {
-            name: 'Vue Paper UI Kit PRO',
-            budget: 1109,
-            status: "delayed",
-            owner: "client1",
-          },
-                    {
-            name: 'Argon Design System',
-            budget: 1109,
-            status: "pending",
-            owner: "client5",
-          },
-                    {
-            name: 'Argon Design System',
-            budget: 1159,
-            status: "pending",
-            owner: "client1",
-          },
-          {
-            name: 'Angular Now UI Kit PRO',
-            budget: 1150,
-            status: "pending",
-            owner: "client2",
-          },
-                    {
-            name: 'Black Dashboard',
-            budget: 1149,
-            status: "completed",
-            owner: "client3",
-          },
-                    {
-            name: 'React Material Dashboard',
-            budget: 1189,
-            status: "pending",
-            owner: "client4",
-          },
-                    {
-            name: 'Vue Paper UI Kit PRO',
-            budget: 1109,
-            status: "delayed",
-            owner: "client1",
-          },
-                    {
-            name: 'Argon Design System',
-            budget: 1109,
-            status: "pending",
-            owner: "client5",
-          },
-                              {
-            name: 'Argon Design System',
-            budget: 1159,
-            status: "pending",
-            owner: "client1",
-          },
-          {
-            name: 'Angular Now UI Kit PRO',
-            budget: 1150,
-            status: "pending",
-            owner: "client2",
-          },
-                    {
-            name: 'Black Dashboard',
-            budget: 1149,
-            status: "completed",
-            owner: "client3",
-          },
-                    {
-            name: 'React Material Dashboard',
-            budget: 1189,
-            status: "pending",
-            owner: "client4",
-          },
-                    {
-            name: 'Vue Paper UI Kit PRO',
-            budget: 1109,
-            status: "delayed",
-            owner: "client1",
-          },
-                    {
-            name: 'Argon Design System',
-            budget: 1109,
-            status: "pending",
-            owner: "client5",
-          },
-                              {
-            name: 'Argon Design System',
-            budget: 1159,
-            status: "pending",
-            owner: "client1",
-          },
-          {
-            name: 'Angular Now UI Kit PRO',
-            budget: 1150,
-            status: "pending",
-            owner: "client2",
-          },
-                    {
-            name: 'Black Dashboard',
-            budget: 1149,
-            status: "completed",
-            owner: "client3",
-          },
-                    {
-            name: 'React Material Dashboard',
-            budget: 1189,
-            status: "pending",
-            owner: "client4",
-          },
-                    {
-            name: 'Vue Paper UI Kit PRO',
-            budget: 1109,
-            status: "delayed",
-            owner: "client1",
-          },
-                    {
-            name: 'Argon Design System',
-            budget: 1109,
-            status: "pending",
-            owner: "client5",
-          },
         ],
       }
     },
+    created() {
+      const config = {headers: { Authorization: `Bearer ${this.$store.state.user.token}` } };
+		  this.$axios.get('/api/account/contracts/accepted',config).then(
+          response => {this.desserts = response.data
+            this.desserts.map(item => item.ended = item.ended == 0 ? 'No' : 'Yes' )
+          }
+      ).catch(
+        error => console
+      )
+  }
   }
 </script>
 

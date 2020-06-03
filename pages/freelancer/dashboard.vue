@@ -11,7 +11,7 @@
                 <div class="col-7">
                     <div class="ml-auto text-right" >
                     <div class="body-3 grey--text font-weight-light">Project</div>
-                    <h4 class="font-weight-light text--primary">30<small></small></h4>
+                    <h4 class="font-weight-light text--primary">{{ projects }} <small></small></h4>
                     </div>
                 </div>
                 <!---->
@@ -111,6 +111,20 @@ import JobProgressTable from '../../components/JobProgressTable';
 export default {
   components: {
       JobProgressTable,
+  }, data() {
+      return  {
+          projects : 0
+      }
+    },
+   created() {
+      const config = {headers: { Authorization: `Bearer ${this.$store.state.user.token}` } };
+		  this.$axios.get('/api/account/contracts/accepted',config).then(
+          response => { let desserts = response.data
+            this.projects  = desserts.length 
+          }
+      ).catch(
+        error => console
+      )
   }
 }
 </script>

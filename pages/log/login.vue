@@ -99,7 +99,7 @@
   } 
   }
 </script>
-<style>
+<style scoped>
   .form-elegant .font-small {
     font-size: 0.8rem; }
 

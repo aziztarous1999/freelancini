@@ -1,13 +1,13 @@
 <template>
   <v-timeline>
     <v-timeline-item
-      v-for="freelancer in Freelancers"
-      :key="freelancer.name"
+      v-for="interview in interviews"
+      :key="interview.id"
       large
     >
       <template v-slot:icon>
         <v-avatar>
-          <img src="http://i.pravatar.cc/64">
+          <img :src="'/api' + interview.freelancer.user.picture ">
         </v-avatar>
       </template>
 
@@ -16,10 +16,10 @@
       </template>
 
       <v-card  class="elevation-2">
-        <v-card-title class="text-primary headline">{{freelancer.name}}</v-card-title>
-        <v-card-text><h5>Why Me ?</h5>{{freelancer.motivation}}</v-card-text>
+        <v-card-title class="text-primary headline">{{interview.freelancer.user.username}}</v-card-title>
+        <v-card-text><h5>Why Me ?</h5>{{interview.lettre}}</v-card-text>
         <center>
-        <nuxt-link :to="'chat/' + freelancer.id" class="btn aqua-gradient rounded-pill" tag="button">Hire!</nuxt-link>
+        <nuxt-link :to="'/contract/client/' + interview.id" class="btn aqua-gradient rounded-pill" tag="button">Hire!</nuxt-link>
         </center>
       </v-card>
     </v-timeline-item>
@@ -29,6 +29,7 @@
 <script>
   export default {
     name:'FreelancersList',
+    props: { interviews : Array } ,
     data: () => ({
       Freelancers: [
           {

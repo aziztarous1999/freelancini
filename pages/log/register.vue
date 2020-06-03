@@ -244,25 +244,17 @@
             </mdb-row>
 
             <mdb-row>
-              <v-col cols="4" md="4" offsetMd="2">
-                <v-text-field
-                  v-model="city"
-                  :rules="cityRules"
-                  :counter="10"
-                  label="Country*"
-                  required
-                ></v-text-field>
+              <v-col cols="8" md="8" offsetMd="2">
+                <v-select
+                 :items="countries"
+                 item-text="name"
+                 item-value="id"
+                 label="Country"
+                 v-model="city"
+                 required
+              ></v-select>
               </v-col>
 
-              <v-col cols="4" md="4">
-                <v-text-field
-                  v-model="state"
-                  :rules="stateRules"
-                  :counter="10"
-                  label="State*"
-                  required
-                ></v-text-field>
-              </v-col>
             </mdb-row>
 
             <br />
@@ -279,10 +271,7 @@
                       streetName.length > 20 ||
                       streetNumber == '' ||
                       streetNumber.length > 6 ||
-                      city == '' ||
-                      city.length > 20 ||
-                      state == '' ||
-                      state.length > 10"
+                      city == null"
                   color="primary"
                   style="float:right"
                   @click="register()"
@@ -304,6 +293,7 @@ import axios from "@nuxtjs/axios";
 
 export default {
   data: () => ({
+    countries : [] ,
     e1: 1,
     valid1: false,
     firstname: "",
@@ -357,7 +347,7 @@ export default {
       v => !!v || "City is required",
       v => v.length <= 6 || "City must be less than 6 numbers"
     ],
-    city: "",
+    city: null ,
     cityRules: [
       v => !!v || "Country is required",
       v => v.length <= 10 || "County must be less than 10 characters"
@@ -421,6 +411,11 @@ export default {
         }
       )
     }
+  } ,
+  created () {
+    this.$axios.get("/api/details/countries").then( response => { 
+      this.countries = response.data
+    }).catch(error => console )
   } ,
   computed: {
      username : { get() {

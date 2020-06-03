@@ -6,15 +6,15 @@
           <mdb-row style="padding:15px">
             <mdb-col md="3" class="aqua-gradient"
               ><img
-                :src="job.client.user.picture"
+                :src="'/api/' + job.client.user.picture"
                 class="prof-img rounded-circle img-fluid"
             /></mdb-col>
             <mdb-col offsetMd="1" md="8">
               <h1 style="font-weight:600;padding:0px">{{ job.title }}</h1>
               <br />
-              <p>
+              <p v-if="job.skills">
                 Main Skill to this job :
-                <span v-for="skill in job.mainSkill" :key="skill">{{
+                <span v-for="skill in job.skills.split(',')" :key="skill">{{
                   skill + " "
                 }}</span>
               </p>
@@ -91,7 +91,8 @@ export default {
 	  }
   } ,
   created() {
-	  this.fetch();
+    this.fetch();
+    this.logged = this.$store.state.user.logged;
   }
 };
 </script>

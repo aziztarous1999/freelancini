@@ -158,14 +158,20 @@ export default {
       v => v.length <= 3 || "Slots must be less than 1000 characters"
     ],
     skillsItems: ["JavaScript", "HTML", "Angular", "PHP", "CSS"],
-    skills: ["HTML"],
+    skills: [],
 
     aboutProject: ""
   }),
   methods : {
     postJob(){
       const config = {headers: { Authorization: `Bearer ${this.$store.state.user.token}` } };
-      const body = { title : this.title , discription : this.aboutProject , slots : this.slots , price : this.price , time : this.time }
+      const body = { 
+        title : this.title , 
+        discription : this.aboutProject , 
+        slots : this.slots , 
+        price : this.price , 
+        time : this.time ,
+        skills : this.skills.toString() }
       this.$axios.post('/api/client/job',body,config).then( response => {
         if (response.data.code == 200) {
           this.$notify({

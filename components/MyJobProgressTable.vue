@@ -30,196 +30,37 @@
             text: 'PROJECT',
             align: 'start',
             filterable: true,
-            value: 'name',
+            value: 'title',
           },
-          { text: 'BUDGET (DT)', value: 'budget' },
+          { text: 'BUDGET (DT)', value: 'contract.price' },
           { text: 'STATUS', value: 'status' },
-          { text: 'Freelancer', value: 'freelancer' },
+          { text: 'Freelancer', value: 'contract.freelancer.user.username' },
+          { text: 'ENDED', value: 'contract.ended' },
         ],
         desserts: [
-          {
-            name: 'Argon Design System',
-            budget: 1159,
-            status: "pending",
-            freelancer: "freelancer1",
-          },
-          {
-            name: 'Angular Now UI Kit PRO',
-            budget: 1150,
-            status: "pending",
-            freelancer: "freelancer2",
-          },
-                    {
-            name: 'Black Dashboard',
-            budget: 1149,
-            status: "completed",
-            freelancer: "freelancer3",
-          },
-                    {
-            name: 'React Material Dashboard',
-            budget: 1189,
-            status: "pending",
-            freelancer: "freelancer4",
-          },
-                    {
-            name: 'Vue Paper UI Kit PRO',
-            budget: 1109,
-            status: "delayed",
-            freelancer: "freelancer1",
-          },
-                    {
-            name: 'Argon Design System',
-            budget: 1109,
-            status: "pending",
-            freelancer: "freelancer5",
-          },
-          {
-            name: 'Argon Design System',
-            budget: 1159,
-            status: "pending",
-            freelancer: "freelancer1",
-          },
-          {
-            name: 'Angular Now UI Kit PRO',
-            budget: 1150,
-            status: "pending",
-            freelancer: "freelancer2",
-          },
-                    {
-            name: 'Black Dashboard',
-            budget: 1149,
-            status: "completed",
-            freelancer: "freelancer3",
-          },
-                    {
-            name: 'React Material Dashboard',
-            budget: 1189,
-            status: "pending",
-            freelancer: "freelancer4",
-          },
-                    {
-            name: 'Vue Paper UI Kit PRO',
-            budget: 1109,
-            status: "delayed",
-            freelancer: "freelancer1",
-          },
-                    {
-            name: 'Argon Design System',
-            budget: 1109,
-            status: "pending",
-            freelancer: "freelancer5",
-          },
-                    {
-            name: 'Argon Design System',
-            budget: 1159,
-            status: "pending",
-            freelancer: "freelancer1",
-          },
-          {
-            name: 'Angular Now UI Kit PRO',
-            budget: 1150,
-            status: "pending",
-            freelancer: "freelancer2",
-          },
-                    {
-            name: 'Black Dashboard',
-            budget: 1149,
-            status: "completed",
-            freelancer: "freelancer3",
-          },
-                    {
-            name: 'React Material Dashboard',
-            budget: 1189,
-            status: "pending",
-            freelancer: "freelancer4",
-          },
-                    {
-            name: 'Vue Paper UI Kit PRO',
-            budget: 1109,
-            status: "delayed",
-            freelancer: "freelancer1",
-          },
-                    {
-            name: 'Argon Design System',
-            budget: 1109,
-            status: "pending",
-            freelancer: "freelancer5",
-          },
-                              {
-            name: 'Argon Design System',
-            budget: 1159,
-            status: "pending",
-            freelancer: "freelancer1",
-          },
-          {
-            name: 'Angular Now UI Kit PRO',
-            budget: 1150,
-            status: "pending",
-            freelancer: "freelancer2",
-          },
-                    {
-            name: 'Black Dashboard',
-            budget: 1149,
-            status: "completed",
-            freelancer: "freelancer3",
-          },
-                    {
-            name: 'React Material Dashboard',
-            budget: 1189,
-            status: "pending",
-            freelancer: "freelancer4",
-          },
-                    {
-            name: 'Vue Paper UI Kit PRO',
-            budget: 1109,
-            status: "delayed",
-            freelancer: "freelancer1",
-          },
-                    {
-            name: 'Argon Design System',
-            budget: 1109,
-            status: "pending",
-            freelancer: "freelancer5",
-          },
-                              {
-            name: 'Argon Design System',
-            budget: 1159,
-            status: "pending",
-            freelancer: "freelancer1",
-          },
-          {
-            name: 'Angular Now UI Kit PRO',
-            budget: 1150,
-            status: "pending",
-            freelancer: "freelancer2",
-          },
-                    {
-            name: 'Black Dashboard',
-            budget: 1149,
-            status: "completed",
-            freelancer: "freelancer3",
-          },
-                    {
-            name: 'React Material Dashboard',
-            budget: 1189,
-            status: "pending",
-            freelancer: "freelancer4",
-          },
-                    {
-            name: 'Vue Paper UI Kit PRO',
-            budget: 1109,
-            status: "delayed",
-            freelancer: "freelancer1",
-          },
-                    {
-            name: 'Argon Design System',
-            budget: 1109,
-            status: "pending",
-            freelancer: "freelancer5",
-          },
+         
         ],
       }
     },
+    created() {
+      const config = {headers: { Authorization: `Bearer ${this.$store.state.user.token}` } };
+		  this.$axios.get('/api/client/jobs',config).then(
+          response => {this.desserts = response.data
+            this.desserts.map(item => {
+              item.contract.ended = item.contract.ended == 0 ? 'No' : 'Yes'
+              if ( item.status == null )
+                item.status = 'On Hold'
+              else if ( item.status == 1 )
+                item.status = 'Strated'
+              else 
+                item.status = 'Refused'
+              
+              })
+          }
+      ).catch(
+        error => console
+      )
+  }
   }
 </script>
 

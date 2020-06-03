@@ -181,6 +181,11 @@ export default {
           icon: "mdi-ballot-outline",
           title: "Jobs",
           to: "/job"
+        },
+        {
+          icon: "mdi-view-dashboard",
+          title: "Available Contracts",
+          to: "/contract/list"
         }
       ],
 
