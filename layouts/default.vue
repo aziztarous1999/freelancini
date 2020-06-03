@@ -219,12 +219,12 @@ export default {
   },
 */ computed: {
     logged() {
-      return true
-      //return this.$store.state.user.logged;
+      //return true
+      return this.$store.state.user.logged;
     },
     role() {
-      return "freelancer"
-      //return this.$store.state.user.role;
+      //return "freelancer"
+      return this.$store.state.user.role;
     }
   },
   methods : {

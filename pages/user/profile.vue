@@ -2,6 +2,8 @@
   <mdb-container >
     <mdb-row>
       <mdb-col sm="8"  style="padding: 12px;padding-top:87px;">
+        <v-dialog v-model="dialog" persistent max-width="290">
+        <template v-slot:activator="{ on }">
         <div
           class="v-card--material pa-3 v-card v-sheet v-card--material--has-heading"
         >
@@ -165,9 +167,16 @@
 
                     <mdb-row>
                       <v-col>
+                        <v-btn
+                         class="btn btn-lg btn-danger rounded-pill text-white"
+                         style="padding-top:23px; padding-bottom:23px;"
+                         tag="button"
+                         v-on="on"
+                       ><i class="fas fa-trash-alt"></i> Delete profile</v-btn>
                         <mdb-btn
                           gradient="blue"
                           class="rounded-pill float-right"
+                          @click="updateProfile()"
                           :disabled="
                             firstname == '' ||
                             firstname.length > 10 ||
@@ -185,9 +194,9 @@
                             state.length > 10 ||
                             mainDomain.length == 0 ||
                             languges.length == 0 ||
-                            skills.length == 0"
-                          >Update Profile</mdb-btn
-                        >
+                            skills.length == 0" 
+                          >  <i class="fas fa-sync-alt"></i> Update Profile</mdb-btn> 
+                        
                       </v-col>
                     </mdb-row>
                   </v-container>
@@ -196,6 +205,23 @@
             </mdb-row>
           </mdb-container>
         </div>
+        </template>
+        <v-card>
+          <v-card-title class="headline text-center"
+            >Are you sure you want to delete your account ?</v-card-title
+          >
+          <v-card-text></v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" text @click="dialog = false"
+              >Disagree</v-btn
+            >
+            <v-btn color="green darken-1" text @click="dialog = false ; deleteProfile()"
+              >Agree</v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
       </mdb-col>
 
       <mdb-col sm="4" style="padding: 12px;padding-top:87px;">
@@ -372,6 +398,7 @@ export default {
     firstname: "",
     lastname: "",
     model: [],
+    dialog : null ,
     categories: [
       {
         name: "DESIGN",
@@ -418,15 +445,15 @@ export default {
       v => !!v || "State is required",
       v => v.length <= 10 || "State must be less than 10 characters"
     ],
-    domainItems: ["DESIGN", "DEVELOP", "Code"],
-    mainDomain: ["DESIGN"],
+    domainItems: ["DESIGN", "DEVELOP", "CODE"],
+    mainDomain: [],
 
     langugesItems: ["Arabic", "Frensh", "English"],
     languges: ["Arabic"],
 
     skillsItems: ["JavaScript", "HTML", "Angular", "PHP", "CSS"],
     skills: ["HTML"],
-
+    image : "" ,
     aboutMe: "",
     solde:5000,
     bitcoins:30,
@@ -440,12 +467,43 @@ export default {
       this.solde-=(a*100);
       console.log(this.solde);
     },
+    fetchProfile(){
+      const config = {headers: { Authorization: `Bearer ${this.$store.state.user.token}` } };
+      this.$axios.get('/api/account/informations',config).then(response => {
+        const profile = response.data[0] ;
+        this.firstname = profile.firstname;
+        this.lastname = profile.lastname;
+        this.email = profile.email; 
+        this.mainDomain = profile.domain.split(',')
+        this.skills = profile.skills.split(',')
+        this.streetName = profile.address.street
+        this.state = profile.address.city
+        this.city = profile.address.country ? profile.address.country.name : "" ;
+      }).catch(
+        error => console
+      )
+    },
     sell(a){
       this.bitcoins-=a;
       console.log(this.bitcoins);
       this.solde+=(a*100);
       console.log(this.solde);
-    }
+    },
+    updateProfile(){
+
+    } ,
+    deleteProfile() {
+       const config = {headers: { Authorization: `Bearer ${this.$store.state.user.token}` } };
+       this.$axios.delete('/api/account/delete',config).then( response => {
+          this.$store.commit('user/logout')
+          this.$nuxt.$router.replace({ path: '/freelancer/dashboard' })
+       }).catch(
+        error => console
+    )
+  }
+  },
+  created() {
+    this.fetchProfile()
   },
   components: {
     mdbContainer,
@@ -463,7 +521,7 @@ export default {
 /*.v-input__slot .v-label{
 color: black!important
 }*/
-input , label { 
+input , label , .v-label , .v-input { 
 color: black!important
 }
 </style>
